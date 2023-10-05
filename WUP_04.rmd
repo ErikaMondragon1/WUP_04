@@ -52,16 +52,37 @@ ggplot(data=GSS, aes(x = DEGREE, y = WORDSUM)) +
   ggtitle("Boxplot of Response Variable by Category")
 ```
 
+This graph shows the WORSUM scores of those with a Bachelor's degree, graduate, high school, and junior college dregree, and less than highschool level of education. 
 
 ### Numerical Descriptive Results
+
+```{r}
+favstats(WORDSUM~DEGREE,data=GSS)
+```
+
+This data shows the mean and median scores of WORDSUM test based on the level of education of a person. This data shows that those who received bachelor, graduate and junior college level of education scored higher on the WORDSUM test, who scored around 9-10,  than those in high school an LT high school who scored around 7-8
+
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 ## Inferential Results
 
+```{r}
+model1 <- aov(WORDSUM~DEGREE,data=GSS)
+summary.aov(model1)
+```
+The p-value is 0.000236, which is lower than 0.05. Therefore, we reject the null hypothesis. This means that there is a significant difference in average score on the WORDSUM test between at least two levels of DEGREE. 
+
+
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
-
+```{r}
+plot(TukeyHSD(model1))
+print(TukeyHSD(model1))
+```
+Based on the graph, there is a difference in high school to graduate, lt high school to graduate. Any place where the lower bound to upper bound contains zero there is no difference 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+The original question was, is there a difference between the average score on the WORDSUM test and level of schooling DEGREE? Yes, there is a difference between  the average score on the WORDSUM test and level of schooling DEGREE. Since the p-value is 0.000236, which is lower than 0.05, we reject the null hypothesis, which is there is no difference between the average score on the WORDSUM test and level of schooling DEGREE. Based on the evidence, we conclude that there is a significant difference in average score on the WORDSUM test between at least two levels of DEGREE
